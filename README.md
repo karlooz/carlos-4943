@@ -23,7 +23,8 @@ cerrar sesión, consultar un dashboard con estadísticas simuladas y **recargar 
 11. [Estándares de código y buenas prácticas](#estándares-de-código-y-buenas-prácticas)
 12. [Seguridad: decisiones y limitaciones](#seguridad-decisiones-y-limitaciones)
 13. [Estado del proyecto](#estado-del-proyecto)
-14. [Herramientas, librerías y uso de IA](#herramientas-librerías-y-uso-de-ia)
+14. [Propuesta de base de datos](#propuesta-de-base-de-datos)
+15. [Herramientas, librerías y uso de IA](#herramientas-librerías-y-uso-de-ia)
 
 ---
 
@@ -391,6 +392,7 @@ mínimos de validez (registro → logout → login → pantalla protegida).
 │       ├── test/                    # Setup y fixtures de pruebas
 │       ├── App.tsx                  # Definición de rutas
 │       └── main.tsx
+├── docs/database/                   # Propuesta de base de datos (diseño + DDL)
 ├── eslint.config.mjs · .prettierrc.json · .editorconfig
 └── package.json                     # Workspaces y scripts globales
 ```
@@ -467,14 +469,25 @@ Limitaciones conocidas (aceptadas por el alcance de la prueba):
 - [x] Manejo en el frontend de rechazo, error del sistema, timeout, error de red y respuestas
       inconsistentes, sin modificar el saldo.
 - [x] Pruebas automatizadas en backend y frontend.
+- [x] Propuesta de base de datos (tarea adicional 2, solo diseño).
 
 ### Pendientes / posibles mejoras
 
-- Despliegue público (tarea opcional).
+- Despliegue público (tarea adicional 1).
 - Pruebas end-to-end en navegador real (p. ej. Playwright) sobre el flujo completo con la API.
-- Mover autenticación y saldo al backend con base de datos (ver limitaciones).
+- Implementar la propuesta de base de datos: mover autenticación y saldo al backend.
 - Idempotency key en la petición a SnailPay para reintentos seguros tras un timeout.
 - Internacionalización de mensajes (actualmente solo español).
+
+## Propuesta de base de datos
+
+Diseño (no implementado) para reemplazar `localStorage` por **PostgreSQL**:
+
+- [`docs/database/propuesta-base-de-datos.md`](docs/database/propuesta-base-de-datos.md): tecnología,
+  estándar de nomenclatura, diagrama entidad-relación, diccionario de datos con tipos, llaves
+  primarias y foráneas, relaciones y los cambios necesarios en frontend y backend.
+- [`docs/database/schema.sql`](docs/database/schema.sql): DDL completo. Tiene 9 tablas: `users`,
+  `sessions`, `wallets`, `payments`, `wallet_movements`, `snails`, `races`, `race_entries` y `bets`.
 
 ## Herramientas, librerías y uso de IA
 
